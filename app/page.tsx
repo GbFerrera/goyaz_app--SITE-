@@ -1,65 +1,214 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import Header from '@/components/Header';
+import Button from '@/components/Button';
+import RegularizationCard from '@/components/RegularizationCard';
+import Modal from '@/components/Modal';
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <>
+      <Header />
+      
+      <main className="pt-5">
+        <section className="relative min-h-[600px] bg-white overflow-hidden">
+          <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+            <svg viewBox="0 0 400 400" className="w-full max-w-2xl">
+              <circle cx="200" cy="120" r="80" fill="none" stroke="currentColor" strokeWidth="2"/>
+              <path d="M 200 200 L 150 350 L 250 350 Z" fill="none" stroke="currentColor" strokeWidth="2"/>
+              <text x="200" y="380" fontSize="24" textAnchor="middle" fill="currentColor" fontWeight="bold">
+                RESERVA LEGAL
+              </text>
+              <text x="200" y="405" fontSize="14" textAnchor="middle" fill="currentColor">
+                CERTIDÕES DE CARTÓRIO
+              </text>
+            </svg>
+          </div>
+          
+        
+          <div className="container mx-auto px-4 py-16 md:py-24 max-w-7xl relative z-10">
+            <div className="max-w-xl">
+              <p className="text-[#04C55F] font-semibold mb-4 text-sm md:text-base">
+                Gestão Regulamentaria
+              </p>
+              <h1 className="text-black text-3xl md:text-5xl font-bold mb-6 leading-tight">
+                Escolha O Tipo De Regularização Que Você Precisa.
+              </h1>
+              <p className="text-gray-700 text-base md:text-lg leading-relaxed">
+                podemos atuar tanto em áreas rurais quanto urbanas, incluindo também o processo de compra de reservas legais, garantindo conformidade total com as normas ambientais e fundiárias.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-gradient-to-br from-[#04C55F] to-[#00C65E] py-12 md:py-16 relative">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-12">
+              <div className="text-white">
+                <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                  Qual tipo de regularização você precisa hoje?
+                </h2>
+              </div>
+              <Button 
+                variant="primary" 
+                className="bg-white text-[#04C55F] hover:bg-gray-50 flex-shrink-0"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+                Escolher Agora
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <RegularizationCard
+                type="rural"
+                title="Rurais"
+                description="precisamos das seguintes documentações e informações"
+                items={[
+                  'Documentação do posse',
+                  'CCIR',
+                  'ITR e Declaração',
+                  'CAR',
+                  'Georeferidas'
+                ]}
+              />
+              <RegularizationCard
+                type="urbana"
+                title="Urbanas"
+                description="precisamos das seguintes documentações e informações"
+                items={[
+                  'Documentação do posse',
+                  'IPTU',
+                  'Georferidas',
+                  'Levantamento Unificai'
+                ]}
+              />
+              <RegularizationCard
+                type="reserva"
+                title="Reserva Legal"
+                description="Confira as opções de reservas legais disponíveis."
+                items={[]}
+                hasMap={true}
+              />
+            </div>
+          </div>
+          
+          <div className="absolute bottom-0 left-0 right-0 h-32 opacity-10">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDAwMDAiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
+          </div>
+        </section>
+
+        <section className="bg-[#024344] py-12 md:py-20">
+          
+        </section>
+
+        <section className="bg-gradient-to-br from-[#04C55F] to-[#00C65E] py-12 md:py-16">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="text-center mb-12">
+              <p className="text-white text-sm font-semibold mb-3 uppercase tracking-wide">
+                Andando você desde o início
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Como podemos te ajudar?
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <RegularizationCard
+                type="rural"
+                title="Rurais"
+                description="precisamos das seguintes documentações e informações"
+                items={[
+                  'Documentação do posse',
+                  'CCIR',
+                  'ITR e Declaração',
+                  'CAR',
+                  'Georeferidas'
+                ]}
+              />
+              <RegularizationCard
+                type="urbana"
+                title="Urbanas"
+                description="precisamos das seguintes documentações e informações"
+                items={[
+                  'Documentação do posse',
+                  'IPTU',
+                  'Georferidas',
+                  'Levantamento Unificai'
+                ]}
+              />
+              <RegularizationCard
+                type="reserva"
+                title="Reserva Legal"
+                description="Confira as opções de reservas legais disponíveis."
+                items={[]}
+                hasMap={true}
+              />
+            </div>
+          </div>
+        </section>
       </main>
-    </div>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="p-8 md:p-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-center">
+            Escolha o tipo de regularização
+          </h2>
+          <p className="text-gray-600 text-center mb-8">
+            Selecione a opção que melhor se adequa à sua necessidade
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <button className="p-6 border-2 border-gray-200 rounded-xl hover:border-[#04C55F] hover:shadow-lg transition-all text-left group">
+              <div className="w-12 h-12 bg-[#04C55F] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">Regularização Rural</h3>
+              <p className="text-gray-600 text-sm">Para propriedades rurais e áreas agricultáveis</p>
+            </button>
+
+            <button className="p-6 border-2 border-gray-200 rounded-xl hover:border-[#04C55F] hover:shadow-lg transition-all text-left group">
+              <div className="w-12 h-12 bg-[#04C55F] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">Regularização Urbana</h3>
+              <p className="text-gray-600 text-sm">Para imóveis urbanos e loteamentos</p>
+            </button>
+
+            <button className="p-6 border-2 border-gray-200 rounded-xl hover:border-[#04C55F] hover:shadow-lg transition-all text-left group">
+              <div className="w-12 h-12 bg-[#04C55F] rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                </svg>
+              </div>
+              <h3 className="font-bold text-xl mb-2">Reserva Legal</h3>
+              <p className="text-gray-600 text-sm">Compra e registro de reserva legal</p>
+            </button>
+          </div>
+
+          <div className="mt-8 p-6 bg-gray-50 rounded-xl">
+            <h4 className="font-semibold mb-3">Não sabe qual escolher?</h4>
+            <p className="text-sm text-gray-600 mb-4">
+              Nossa equipe está pronta para te ajudar a identificar a melhor opção para o seu caso.
+            </p>
+            <Button variant="primary" className="w-full">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Falar com Especialista
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 }
