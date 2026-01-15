@@ -38,12 +38,17 @@ export default function Header() {
             </a>
           </li>
           <li>
-            <a href="#sobre" className="text-gray-700 hover:text-[#04C55F] transition-colors font-medium border-b-2 border-[#04C55F]">
-              Sobre Nós
+            <a href="/vendas" className="text-gray-700 hover:text-[#04C55F] transition-colors font-medium border-b-2 border-[#04C55F]">
+              Vendas
             </a>
           </li>
           <li>
-            <a href="#contato" className="text-gray-700 hover:text-[#04C55F] transition-colors font-medium">
+            <a href="/sobre" className="text-gray-700 hover:text-[#04C55F] transition-colors font-medium">
+              Sobre nós
+            </a>
+          </li>
+          <li>
+            <a href="/contato" className="text-gray-700 hover:text-[#04C55F] transition-colors font-medium">
               Contato
             </a>
           </li>
