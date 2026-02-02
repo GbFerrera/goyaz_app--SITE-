@@ -128,14 +128,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <a
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-goyaz-dark dark:text-neutral-300 hover:text-goyaz-primary transition-colors"
+          className="relative px-4 py-2 text-goyaz-dark dark:text-neutral-300 hover:text-goyaz-accent transition-colors"
           key={`link-${idx}`}
           href={item.link}
         >
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-goyaz-primary/10 dark:bg-goyaz-primary/20"
+              className="absolute inset-0 h-full w-full rounded-full bg-goyaz-accent/10 dark:bg-goyaz-accent/20"
             />
           )}
           <span className="relative z-20 font-medium">{item.name}</span>
@@ -237,7 +237,7 @@ export const NavbarLogo = () => {
       className="relative z-20 mr-4 flex items-center px-2 py-1 text-sm font-normal"
     >
       <img 
-        src="/icon.png" 
+        src="/logo-header.png" 
         alt="Goyaz - Regularização Fundiária e Ambiental" 
         className="h-12 w-auto"
       />

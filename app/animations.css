@@ -1,1 +1,4 @@
-@import "tw-animate-css";
+/* @import "tw-animate-css"; */
+/* O plugin tw-animate-css não é compatível diretamente com Tailwind CSS v4 via @import. 
+   As animações devem ser definidas manualmente no @theme ou usando bibliotecas compatíveis. */
+
