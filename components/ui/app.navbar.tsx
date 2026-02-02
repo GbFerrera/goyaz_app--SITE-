@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 export function AppNavbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://http://192.168.1.38:3433:3433';
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://http://localhost:3334:3433';
   const [categories, setCategories] = useState<string[]>([]);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 

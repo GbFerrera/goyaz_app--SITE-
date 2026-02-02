@@ -30,7 +30,7 @@ npm install
 npm run dev
 
 # Abrir no navegador
-# http://http://192.168.1.38:3433:3000
+# http://http://localhost:3334:3000
 ```
 
 ## 📱 Componentes

@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight, Quote, Instagram, Facebook, MessageCircle, A
 import { IconBrandWhatsapp } from "@tabler/icons-react";
 import CardCarousel from '@/components/cardCarousel';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Autoplay } from 'swiper/modules';
+import { EffectCoverflow, Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -78,7 +78,7 @@ export default function Servicos() {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [activeHelpIndex, setActiveHelpIndex] = useState(0);
   const [whatsappPhraseIndex, setWhatsappPhraseIndex] = useState(0);
-  const [docsModal, setDocsModal] = useState<{ isOpen: boolean; type: 'rural' | 'urbano' | null }>({ isOpen: false, type: null });
+  const [docsModal, setDocsModal] = useState<{ isOpen: boolean; type: 'rural' | 'urbano' | 'ambiental' | null }>({ isOpen: false, type: null });
 
   // Form State
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', description: '' });
@@ -86,7 +86,7 @@ export default function Servicos() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://http://192.168.1.38:3433:3433';
+  const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://http://localhost:3334:3433';
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -154,8 +154,8 @@ export default function Servicos() {
             url,
             name: 'Documento enviado pelo site',
             date: new Date().toISOString(),
-            description: `${docsModal.type === 'rural' ? 'Regularização Rural' : 'Regularização Urbana'} - ${formData.description}`,
-            caseTitle: docsModal.type === 'rural' ? 'Regularização Rural' : 'Regularização Urbana',
+            description: `${docsModal.type === 'rural' ? 'Regularização Rural' : docsModal.type === 'ambiental' ? 'Regularização Ambiental' : 'Regularização Urbana'} - ${formData.description}`,
+            caseTitle: docsModal.type === 'rural' ? 'Regularização Rural' : docsModal.type === 'ambiental' ? 'Regularização Ambiental' : 'Regularização Urbana',
             caseStatus: 'Pendente'
           })),
         }),
@@ -281,7 +281,7 @@ export default function Servicos() {
                 <div>
                   <h3 className="text-white text-xl font-bold">Envio de Documentação</h3>
                   <p className="text-white/60 text-sm">
-                    {docsModal.type === 'rural' ? 'Regularização Rural' : 'Regularização Urbana'}
+                    {docsModal.type === 'rural' ? 'Regularização Rural' : docsModal.type === 'ambiental' ? 'Regularização Ambiental' : 'Regularização Urbana'}
                   </p>
                 </div>
                 <button 
@@ -314,7 +314,7 @@ export default function Servicos() {
                           <>
                             <li className="flex items-start gap-2 text-sm text-gray-600">
                               <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
-                              Documentação de posse
+                              Documentação de posse (Escritura/Contrato)
                             </li>
                             <li className="flex items-start gap-2 text-sm text-gray-600">
                               <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
@@ -330,7 +330,26 @@ export default function Servicos() {
                             </li>
                             <li className="flex items-start gap-2 text-sm text-gray-600">
                               <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
-                              Levantamento de Benfeitorias
+                              Fotos das benfeitorias existentes
+                            </li>
+                          </>
+                        ) : docsModal.type === 'ambiental' ? (
+                          <>
+                            <li className="flex items-start gap-2 text-sm text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
+                              Documentação da propriedade
+                            </li>
+                            <li className="flex items-start gap-2 text-sm text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
+                              Licenças ambientais existentes
+                            </li>
+                            <li className="flex items-start gap-2 text-sm text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
+                              Estudos ambientais anteriores
+                            </li>
+                            <li className="flex items-start gap-2 text-sm text-gray-600">
+                              <span className="w-1.5 h-1.5 rounded-full bg-goyaz-accent mt-1.5 shrink-0" />
+                              Fotos da área de interesse
                             </li>
                           </>
                         ) : (
@@ -405,6 +424,8 @@ export default function Servicos() {
                           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-goyaz-accent focus:ring-1 focus:ring-goyaz-accent outline-none transition-all min-h-[100px] text-sm resize-none"
                           placeholder={docsModal.type === 'rural' 
                             ? "Ex: Gostaria de regularizar uma área rural que recebi de herança..." 
+                            : docsModal.type === 'ambiental'
+                            ? "Ex: Preciso de licenciamento ambiental para meu projeto..."
                             : "Ex: Gostaria de regularizar meu imóvel urbano que não possui escritura..."}
                         />
                       </div>
@@ -413,7 +434,7 @@ export default function Servicos() {
                         <label className="block text-sm font-medium text-gray-700 mb-2">
                           Anexar Documentos
                           <span className="block text-xs text-gray-500 font-normal mt-0.5">
-                            Selecione os arquivos solicitados ({docsModal.type === 'rural' ? 'CCIR, ITR, CAR...' : 'IPTU, Escritura...'})
+                            Selecione os arquivos solicitados ({docsModal.type === 'rural' ? 'CCIR, ITR, CAR...' : docsModal.type === 'ambiental' ? 'Licenças, Estudos...' : 'IPTU, Escritura...'})
                           </span>
                         </label>
                         <div className="relative">
@@ -857,9 +878,9 @@ export default function Servicos() {
               <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Rurais</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">precisaremos das seguintes documentações e informações</p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
                 <ul className="space-y-3 mb-10 flex-grow">
-                  {['Documentação de posse', 'CCIR', 'ITR + Declaração', 'CAR', 'Benfeitorias'].map((item, idx) => (
+                  {['CAR (Cadastro Ambiental Rural)', 'Georreferenciamento', 'Documentação do terreno', 'CCIR', 'ITR + Declaração'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
                       {item}
@@ -883,9 +904,9 @@ export default function Servicos() {
               <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Urbanas</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">precisaremos das seguintes documentações e informações</p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentacões </p>
                 <ul className="space-y-3 mb-10 flex-grow">
-                  {['Documentação de posse', 'IPTU', 'Benfeitorias', 'Descreva seu imóvel'].map((item, idx) => (
+                  {['Tipo de empreendimento', 'Endereço completo', 'Documentação de posse', 'IPTU', 'Benfeitorias'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
                       {item}
@@ -904,6 +925,33 @@ export default function Servicos() {
               </div>
             </SwiperSlide>
 
+            {/* Card Ambiental */}
+            <SwiperSlide className="w-[calc(100vw-64px)] max-w-[400px]">
+              <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
+                <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
+                <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Ambiental</h3>
+                <p className="text-gray-900 font-bold text-sm mb-4">Zona urbana: tipo de empreendimento e endereço (Mercado, posto). Zona rural: CAR, georreferenciamento e documentação do terreno.</p>
+                <ul className="space-y-3 mb-10 flex-grow">
+                  {['Tipo de empreendimento e endereço', 'CAR e georreferenciamento', 'Documentação do terreno', 'Licenciamento ambiental'].map((item, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600 text-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={() => setDocsModal({ isOpen: true, type: 'ambiental' })}
+                  className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
+                >
+                  Solicitar consultoria
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4">
+                  Caso tenha dúvida entre em contato com nosso time de suporte
+                </a>
+              </div>
+            </SwiperSlide>
+
             {/* Card Reserva Legal */}
             <SwiperSlide className="w-[calc(100vw-64px)] max-w-[400px]">
               <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
@@ -911,13 +959,14 @@ export default function Servicos() {
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Reserva Legal</h3>
                 <p className="text-gray-900 font-bold text-sm mb-4">Confira as opções de reservas legais disponíveis.</p>
                 <div className="rounded-2xl overflow-hidden mb-10 flex-grow border border-gray-100">
-                  <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=400&auto=format&fit=crop" alt="Mapa" className="w-full h-48 object-cover grayscale opacity-60" />
+                  <img src="/image-reserva.png" alt="Reserva Legal" className="w-full h-48 object-cover" />  
                 </div>
                 <Link 
                   href="/vendas?category=Reserva%20legal"
                   className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
                 >
                   Ver reservas
+                  <ArrowRight className="w-5 h-5" />
                 </Link>
                 <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4">
                   Caso tenha dúvida entre em contato com nosso time de suporte
@@ -928,7 +977,7 @@ export default function Servicos() {
 
           {/* Dots de navegação mobile/tablet */}
           <div className="flex justify-center gap-2 mt-4">
-            {[0, 1, 2].map((idx) => (
+            {[0, 1, 2, 3].map((idx) => (
               <button
                 key={idx}
                 onClick={() => {
@@ -943,99 +992,174 @@ export default function Servicos() {
           </div>
         </div>
 
-        {/* Grid Desktop */}
-        <div className="hidden lg:grid grid-cols-3 gap-8">
-          {/* Card Rurais */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-full shadow-2xl"
+        {/* Carousel Desktop */}
+        <div className="hidden lg:block">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={32}
+            slidesPerView={3}
+            navigation={{
+              nextEl: '.services-next',
+              prevEl: '.services-prev',
+            }}
+            pagination={{
+              el: '.services-pagination',
+              clickable: true,
+            }}
+            breakpoints={{
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 32,
+              },
+              1280: {
+                slidesPerView: 3,
+                spaceBetween: 32,
+              },
+            }}
+            className="services-swiper"
           >
-            <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
-            <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Rurais</h3>
-            <p className="text-gray-900 font-bold text-sm mb-4">precisaremos das seguintes documentações e informações</p>
-            <ul className="space-y-3 mb-10 flex-grow">
-              {['Documentação de posse', 'CCIR', 'ITR + Declaração', 'CAR', 'Benfeitorias'].map((item, idx) => (
-                <li key={idx} className="flex items-center text-gray-600 text-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={() => setDocsModal({ isOpen: true, type: 'rural' })}
-              className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
-            >
-              Enviar documentos
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </button>
-            <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
-              Caso tenha dúvida entre em contato com nosso time de suporte
-            </a>
-          </motion.div>
+            {/* Card Rurais */}
+            <SwiperSlide>
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-[520px] shadow-2xl"
+              >
+                <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
+                <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Rurais</h3>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
+                <ul className="space-y-3 mb-10 flex-grow">
+                  {['CAR (Cadastro Ambiental Rural)', 'Georreferenciamento', 'Documentação do terreno', 'CCIR', 'ITR + Declaração'].map((item, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600 text-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={() => setDocsModal({ isOpen: true, type: 'rural' })}
+                  className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
+                >
+                  Enviar documentos
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </button>
+                <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
+                  Caso tenha dúvida entre em contato com nosso time de suporte
+                </a>
+              </motion.div>
+            </SwiperSlide>
 
-          {/* Card Urbanas */}
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-full shadow-2xl"
-          >
-            <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
-            <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Urbanas</h3>
-            <p className="text-gray-900 font-bold text-sm mb-4">precisaremos das seguintes documentações e informações</p>
-            <ul className="space-y-3 mb-10 flex-grow">
-              {['Documentação de posse', 'IPTU', 'Benfeitorias', 'Descreva seu imóvel'].map((item, idx) => (
-                <li key={idx} className="flex items-center text-gray-600 text-sm">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <button 
-              onClick={() => setDocsModal({ isOpen: true, type: 'urbano' })}
-              className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
-            >
-              Enviar documentação
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </button>
-            <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
-              Caso tenha dúvida entre em contato com nosso time de suporte
-            </a>
-          </motion.div>
+            {/* Card Urbanas */}
+            <SwiperSlide>
+              <motion.div 
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-[520px] shadow-2xl"
+              >
+                <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
+                <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Urbanas</h3>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
+                <ul className="space-y-3 mb-10 flex-grow">
+                  {['Tipo de empreendimento', 'Endereço completo', 'Documentação de posse', 'IPTU', 'Benfeitorias'].map((item, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600 text-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={() => setDocsModal({ isOpen: true, type: 'urbano' })}
+                  className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
+                >
+                  Enviar documentação
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                </button>
+                <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
+                  Caso tenha dúvida entre em contato com nosso time de suporte
+                </a>
+              </motion.div>
+            </SwiperSlide>
 
-          {/* Card Reserva Legal */}
-          <motion.div  
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-full shadow-2xl"
-          >
-            <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Reservas legais disponíveis</span>
-            <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Reserva Legal</h3>
-            <p className="text-gray-900 font-bold text-sm mb-4">Confira as opções de reservas legais disponíveis.</p>
-            <div className="rounded-2xl overflow-hidden mb-10 flex-grow border border-gray-100">
-              <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=400&auto=format&fit=crop" alt="Mapa" className="w-full h-48 object-cover" />
-            </div>
-            <Link 
-              href="/vendas?category=Reserva%20Legal"
-              className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
-            >
-              Ver reservas
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
-              Caso tenha dúvida entre em contato com nosso time de suporte
-            </a>
-          </motion.div>
+            {/* Card Ambiental */}
+            <SwiperSlide>
+              <motion.div  
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-[520px] shadow-2xl"
+              >
+                <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
+                <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Ambiental</h3>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seguintes informações e documentações</p>
+                <ul className="space-y-3 mb-10 flex-grow">
+                  {['Tipo de empreendimento e endereço', 'CAR e georreferenciamento', 'Documentação do terreno', 'Licenciamento ambiental'].map((item, idx) => (
+                    <li key={idx} className="flex items-center text-gray-600 text-sm">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#00D65F] mr-3" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <button 
+                  onClick={() => setDocsModal({ isOpen: true, type: 'ambiental' })}
+                  className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
+                >
+                  Solicitar consultoria
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
+                  Caso tenha dúvida entre em contato com nosso time de suporte
+                </a>
+              </motion.div>
+            </SwiperSlide>
+
+            {/* Card Reserva Legal */}
+            <SwiperSlide>
+              <motion.div  
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="bg-white rounded-tl-[32px] rounded-[10px] p-8 flex flex-col h-[520px] shadow-2xl"
+              >
+                <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Reservas legais disponíveis</span>
+                <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Reserva Legal</h3>
+                <p className="text-gray-900 font-bold text-sm mb-4">Confira as opções de reservas legais disponíveis.</p>
+                <div className="rounded-2xl overflow-hidden mb-10 flex-grow border border-gray-100">
+                  <img src="/image-reserva.png" alt="Reserva Legal" className="w-full h-48 object-cover" />  
+                </div>
+                <Link 
+                  href="/vendas?category=Reserva%20Legal"
+                  className="w-full bg-[#00D65F] hover:bg-[#00B851] text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-2 transition-colors mb-6"
+                >
+                  Ver reservas
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <a href="#" className="text-center text-gray-900 font-bold text-sm underline underline-offset-4 hover:text-goyaz-accent transition-colors">
+                  Caso tenha dúvida entre em contato com nosso time de suporte
+                </a>
+              </motion.div>
+            </SwiperSlide>
+          </Swiper>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center items-center gap-4 mt-8">
+            <button className="services-prev w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <ChevronLeft className="w-6 h-6 text-goyaz-dark" />
+            </button>
+            <div className="services-pagination flex gap-2"></div>
+            <button className="services-next w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center hover:bg-gray-50 transition-colors">
+              <ChevronRight className="w-6 h-6 text-goyaz-dark" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
