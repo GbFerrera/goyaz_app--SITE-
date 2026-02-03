@@ -848,7 +848,7 @@ export default function Servicos() {
           </button>
           <button 
             onClick={() => swiperHelpRef.current?.slideNext()}
-            className={`w-10 h-10 rounded-full bg-goyaz-accent shadow-lg border border-white/20 flex items-center justify-center text-goyaz-dark pointer-events-auto active:scale-95 transition-all duration-300 ${activeHelpIndex === 2 ? 'invisible opacity-0' : 'visible opacity-100'}`}
+            className={`w-10 h-10 rounded-full bg-goyaz-accent shadow-lg border border-white/20 flex items-center justify-center text-goyaz-dark pointer-events-auto active:scale-95 transition-all duration-300 ${activeHelpIndex === 3 ? 'invisible opacity-0' : 'visible opacity-100'}`}
           >
             <ChevronRight className="w-6 h-6" />
           </button>
@@ -878,7 +878,7 @@ export default function Servicos() {
               <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Rurais</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seguintes informações e documentações</p>
                 <ul className="space-y-3 mb-10 flex-grow">
                   {['CAR (Cadastro Ambiental Rural)', 'Georreferenciamento', 'Documentação do terreno', 'CCIR', 'ITR + Declaração'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
@@ -904,7 +904,7 @@ export default function Servicos() {
               <div className="bg-white rounded-tl-[32px] rounded-[10px] p-6 flex flex-col h-[520px] shadow-2xl">
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Urbanas</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentacões </p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seguintes informações e documentacões </p>
                 <ul className="space-y-3 mb-10 flex-grow">
                   {['Tipo de empreendimento', 'Endereço completo', 'Documentação de posse', 'IPTU', 'Benfeitorias'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
@@ -1029,7 +1029,7 @@ export default function Servicos() {
               >
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Rurais</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seguintes informações e documentações</p>
                 <ul className="space-y-3 mb-10 flex-grow">
                   {['CAR (Cadastro Ambiental Rural)', 'Georreferenciamento', 'Documentação do terreno', 'CCIR', 'ITR + Declaração'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
@@ -1064,7 +1064,7 @@ export default function Servicos() {
               >
                 <span className="text-[#00D65F] text-xs font-bold tracking-widest uppercase mb-2">Regularização</span>
                 <h3 className="text-goyaz-dark text-3xl font-bold mb-6">Urbanas</h3>
-                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seuintes informações e documentações</p>
+                <p className="text-gray-900 font-bold text-sm mb-4">Precisaremos das seguintes informações e documentações</p>
                 <ul className="space-y-3 mb-10 flex-grow">
                   {['Tipo de empreendimento', 'Endereço completo', 'Documentação de posse', 'IPTU', 'Benfeitorias'].map((item, idx) => (
                     <li key={idx} className="flex items-center text-gray-600 text-sm">
@@ -1463,7 +1463,7 @@ export default function Servicos() {
                   <p className="text-gray-400 text-[9px] uppercase tracking-widest">
                     Desenvolvido por
                   </p>
-                  <p className="text-goyaz-dark font-bold text-xs">Link System</p>
+                  <a className="text-goyaz-dark font-bold text-xs" href="https://www.linksystem.tech" target="_blank" rel="noopener noreferrer">Link System</a>
                 </div>
               </div>
 
@@ -1498,7 +1498,7 @@ export default function Servicos() {
         </AnimatePresence>
 
         <motion.a
-          href="https://wa.me/5511992044690"
+          href="https://wa.me/559999999999"
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.1 }}

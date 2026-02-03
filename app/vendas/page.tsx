@@ -318,7 +318,7 @@ function VendasContent() {
             </div>
             
             <a 
-              href="https://wa.me/5511992044690" 
+              href="https://wa.me/559999999999" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-goyaz-accent hover:bg-goyaz-yellow transition-all duration-300 text-white font-bold py-5 px-10 rounded-full flex items-center gap-4 shadow-2xl hover:shadow-goyaz-accent/30 hover:-translate-y-1 whitespace-nowrap"
@@ -459,7 +459,7 @@ function VendasContent() {
                 </div>
 
                 <a 
-                  href={`https://wa.me/5511992044690?text=Olá, tenho interesse na propriedade em ${selectedSale.localization} (${selectedSale.category})`}
+                  href={`https://wa.me/559999999999?text=Olá, tenho interesse na propriedade em ${selectedSale.localization} (${selectedSale.category})`}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full bg-goyaz-dark hover:bg-black text-white font-bold py-5 px-8 rounded-2xl flex items-center justify-center gap-4 transition-all shadow-xl hover:shadow-gray-200"
